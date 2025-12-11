@@ -6,6 +6,20 @@ Marriage Pact
 
 Q1. It is your choice to use either an ordered or unordered set. In a few sentences, what are some of the tradeoffs between the two? Additionally, please give an example (that has not been shown in lecture) of a valid hash function that could be used to hash student names for an unordered set.
 A1. TODO
+有序集合保持元素顺序，支持logN的查找和遍历时按照字典序输出，但是插入和删除很慢
+无序集合基于哈希，平均插入和查找是常数时间，但是迭代顺序无法预测，需要自定义哈希函数。
+可以把名字里每个ascii值乘对应的质数再累加
+size_t hash_name(const std::string& name) {
+  size_t h = 0;
+  static const int primes[] = {31, 37, 41, 43, 47};
+  for (size_t i = 0; i < name.size(); ++i) {
+    h ^= static_cast<size_t>(name[i]) * primes[i % 5];
+  }
+  return h;
+}
 
 Q2. Note that we are saving pointers to names in the queue, not names themselves. Why might this be desired in this problem? What happens if the original set where the names are stored goes out of scope and the pointers are referenced?
 A2. TODO
+我们用指针保存，可以避免大量的字符串拷贝，并且当匹配选中时，可以直接引用原始集合的名字。
+如果原始存储的名字set被销毁或者超出作用域，
+指针就成了悬空指针，访问指针值导致未定义的行为甚至崩溃。

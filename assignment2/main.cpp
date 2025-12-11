@@ -13,8 +13,8 @@
 #include <set>
 #include <string>
 #include <unordered_set>
-
-std::string kYourName = "STUDENT TODO"; // Don't forget to change this!
+#include <sstream>
+std::string kYourName = "Aerry Bones"; // Don't forget to change this!
 
 /**
  * Takes in a file name and returns a set containing all of the applicant names as a set.
@@ -29,6 +29,30 @@ std::string kYourName = "STUDENT TODO"; // Don't forget to change this!
  */
 std::set<std::string> get_applicants(std::string filename) {
   // STUDENT TODO: Implement this function.
+  std::ifstream ifile;
+  ifile.open(filename);
+  std::string line;
+  std::set<std::string> result;
+  while(std::getline(ifile, line)){
+    result.insert(line);
+  }
+  return result;
+}
+
+std::string initialName(std::string a){
+  if(a == ""){
+    return "";
+  }
+  std::stringstream ss(a);
+  std::string sub;
+  std::string sub1;
+  while (std::getline(ss, sub, ' '))
+  {
+    if(sub != "" && sub[0] >= 'A' && sub[0] <= 'Z'){
+      sub1.push_back(sub[0]);
+    }
+  }
+  return sub1;
 }
 
 /**
@@ -41,8 +65,19 @@ std::set<std::string> get_applicants(std::string filename) {
  */
 std::queue<const std::string*> find_matches(std::string name, std::set<std::string>& students) {
   // STUDENT TODO: Implement this function.
+  // 返回首字母相同的名字队列
+  std::string target = initialName(name);
+  std::queue<const std::string*> myque;
+  for(auto& student : students){
+    std::string cur = initialName(student);
+    if(cur != "" && cur == target){
+      // 如果传入的是临时副本的地址，循环结束，地址就失效了，所以遍历要用引用
+      // 容器本身保存的就是const string， 也就不需要const_cast 了
+      myque.push(&student);
+    }
+  }
+  return myque;
 }
-
 /**
  * Takes in a queue of pointers to possible matches and determines the one true match!
  *
@@ -55,6 +90,14 @@ std::queue<const std::string*> find_matches(std::string name, std::set<std::stri
  */
 std::string get_match(std::queue<const std::string*>& matches) {
   // STUDENT TODO: Implement this function.
+  if(matches.empty()){
+    return "NO MATCHES FOUND.";
+  }else{
+    // std::cout << *matches.front();
+    std::string result = *matches.front();
+    matches.pop();
+    return result;
+  }
 }
 
 /* #### Please don't remove this line! #### */
