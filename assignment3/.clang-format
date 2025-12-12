@@ -1,0 +1,31 @@
+---
+BasedOnStyle: Google          # 基于 Google 风格作为整体默认
+Standard: c++20               # 设定语言标准为 C++20
+IndentWidth: 2                # 缩进使用 2 个空格
+TabWidth: 2                   # Tab 等效宽度 2 个空格
+UseTab: Never                 # 禁用 tab，统一使用空格
+ColumnLimit: 100              # 每行最长 100 列
+DerivePointerAlignment: false # 不自动推导指针对齐方式，固定按下项
+PointerAlignment: Left        # 指针符号 * 靠左，如 `int* ptr`
+AccessModifierOffset: -2      # public/private 等缩进调整
+AlignAfterOpenBracket: Align  # 函数调用括号内参数对齐
+AllowShortFunctionsOnASingleLine: Empty # 仅允许空函数体写在一行
+AllowShortIfStatementsOnASingleLine: Never # if 语句不单行写
+AllowShortLoopsOnASingleLine: false        # 循环语句不单行写
+BreakConstructorInitializers: AfterColon   # 构造函数初始化列表冒号后换行
+BreakBeforeBraces: Attach                  # 大括号紧贴控制语句
+ExperimentalAutoDetectBinPacking: false    # 禁用实验性 bin packing
+IncludeBlocks: Preserve                    # 保持 include 块原有分组
+IncludeCategories:                         # include 分类排序
+  - Regex: '^<.*>'       # 标准库头文件优先
+    Priority: 1
+  - Regex: '^".*"'       # 本地头文件其次
+    Priority: 2
+  - Regex: '^<.*\\.h>'   # C 头文件放后
+    Priority: 3
+SpaceBeforeParens: ControlStatements       # 只在控制语句前加空格
+SpacesInAngles: false                      # 模板尖括号内部无空格
+SpacesInContainerLiterals: false           # 容器字面量内无空格
+SpacesInParentheses: false                 # 普通括号内部无空格
+SortIncludes: true                         # 自动排序 include
+
